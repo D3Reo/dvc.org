@@ -15,7 +15,8 @@ by Rscript command.
                    ...
 
     positional arguments:
-      command               Command or command file to execute
+      command               Command or command file to execute, optionally
+                            as a string (i.e. between apostrophes)
 
     optional arguments:
       -h, --help            Show this help message and exit
@@ -69,4 +70,14 @@ Extract an XML file from an archive to the `data/` folder:
     $ dvc run -d Posts.xml.tgz \
               -o data/Posts.xml \
               tar zxf Posts.xml.tgz -C data/
+```
+
+Run mutliple scripts that work on the same output folder:
+
+```dvc
+    $ dvc run -d pdf_2_png.py \
+              -d extract_text.py \
+              -d pdf_files \
+              -o png_files \
+              'python pdf_2_png.py -i pdf_files -o png_files && python extract_text.py -i png_files'
 ```
